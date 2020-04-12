@@ -4,7 +4,6 @@
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 
-- [Paque `¯\_(ツ)_/¯`](#paque-ツ)
     - [Installation](#installation)
         - [Tab completion](#tab-completion)
     - [Why?](#why)
