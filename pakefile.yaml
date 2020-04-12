@@ -1,0 +1,45 @@
+isort:
+  - run: "isort pake/*.py"
+  - message: "Running isort"
+
+mypy:
+  - run: "mypy pake"
+  - message: "Running mypy"
+
+black:
+  - run:
+      - "black pake"
+      - "black tests"
+  - message: "Running black on source and tests"
+
+pytest:
+  - run: "pytest -vv"
+  - message: "Running pytest (in verbose mode)"
+
+pylint:
+  - run: "pylint pake --exit-zero"
+  - message: "Running pylint"
+  
+precommit:
+  - depends:
+      - isort
+      - mypy
+      - black
+      - pylint
+      - pytest
+
+monkeytype-run:
+  - run: "monkeytype run pake/pake.py --dry-run precommit"
+  - message: "Runs monkeytype on this file, precommit with --dry-run"
+
+monkeytype-stubs:
+  - run:
+      - "monkeytype stub pake.planner"
+      - "monkeytype stub pake.parser"
+      - "monkeytype stub pake.task"
+  - message: "Generates stubs for the base modules"
+
+monkeytype:
+  - depends:
+      - monkeytype-run
+      - monkeytype-stubs
