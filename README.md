@@ -142,6 +142,7 @@ I will keep using it, so any bugs I find will be fixed. Likewise, I will keep
 improving it, although the current version is "almost enough". Currently on the
 "roadmap" I have:
 
+- Fix dry-run display of run when it is multiline
 - Generate a graphviz plot of the plan(s). This was one of the motivations to
   write my own thingy, after all
 - Better tests: I wrote the ones I have with a combination of TDD and "let's
