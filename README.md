@@ -1,5 +1,7 @@
 # Paque `¯\_(ツ)_/¯`
 
+[![PyPI version](https://badge.fury.io/py/paque.svg)](https://badge.fury.io/py/paque)
+
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 
 - [Paque `¯\_(ツ)_/¯`](#paque-ツ)
@@ -12,6 +14,7 @@
         - [Why YAML and not FOOML?](#why-yaml-and-not-fooml)
         - [Is this production ready?](#is-this-production-ready)
         - [What's with the name?](#whats-with-the-name)
+        - [Contributing](#contributing)
     - [Future development](#future-development)
 
 <!-- markdown-toc end -->
