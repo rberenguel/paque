@@ -4,17 +4,17 @@
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 
-    - [Installation](#installation)
-        - [Tab completion](#tab-completion)
-    - [Why?](#why)
-    - [What?](#what)
-    - [How?](#how)
-    - [FAQ](#faq)
-        - [Why YAML and not FOOML?](#why-yaml-and-not-fooml)
-        - [Is this production ready?](#is-this-production-ready)
-        - [What's with the name?](#whats-with-the-name)
-        - [Contributing](#contributing)
-    - [Future development](#future-development)
+- [Installation](#installation)
+    - [Tab completion](#tab-completion)
+- [Why?](#why)
+- [What?](#what)
+- [How?](#how)
+- [FAQ](#faq)
+    - [Why YAML and not FOOML?](#why-yaml-and-not-fooml)
+    - [Is this production ready?](#is-this-production-ready)
+    - [What's with the name?](#whats-with-the-name)
+    - [Contributing](#contributing)
+- [Future development](#future-development)
 
 <!-- markdown-toc end -->
 
