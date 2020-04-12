@@ -4,11 +4,11 @@ import os
 
 from colorlog import ColoredFormatter  # type: ignore
 
-from pake.executor import Executor
-from pake.parser import YAMLParser
-from pake.planner import Planner
+from paque.executor import Executor
+from paque.parser import YAMLParser
+from paque.planner import Planner
 
-logger = logging.getLogger("pake")
+logger = logging.getLogger("paque")
 
 
 def configure_logger():
@@ -31,8 +31,8 @@ def configure_logger():
     logger.addHandler(handler)
 
 
-def get_pakefile(args):
-    pakefile = args.pakefile
+def get_paquefile(args):
+    paquefile = args.paquefile
 
     def check_file(candidate: str):
         try:
@@ -46,29 +46,29 @@ def get_pakefile(args):
         logger.debug("File not found: %s (no exception?)", candidate_path)
         return False
 
-    if pakefile is None:
+    if paquefile is None:
 
-        candidates = ["pakefile", "pakefile.yaml"]
+        candidates = ["paquefile", "paquefile.yaml"]
         try:
             indexer = list(map(check_file, candidates)).index(True)
         except ValueError:
             indexer = None
         if indexer is None:
             raise Exception(
-                "No file provided and neither pakefile, pakefile.yaml are available"
+                "No file provided and neither paquefile, paquefile.yaml are available"
             )
         return candidates[indexer]
-    if check_file(pakefile):
-        return pakefile
+    if check_file(paquefile):
+        return paquefile
 
 
-def pake(args):
+def paque(args):
     if args.debug:
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)
-    pakefile = get_pakefile(args)
-    parser = YAMLParser(pakefile)
+    paquefile = get_paquefile(args)
+    parser = YAMLParser(paquefile)
     planner = Planner(parser.parse())
     if args.dry_run:
         Executor(planner.plan(args.task[0])).dry_run()
@@ -78,10 +78,10 @@ def pake(args):
 
 def main(**args):
     configure_logger()
-    parser = argparse.ArgumentParser(description="Pake: Not make, but in Python")
+    parser = argparse.ArgumentParser(description="Paque: Not make, but in Python")
     parser.add_argument(
-        "pakefile",
-        metavar="pakefile",
+        "paquefile",
+        metavar="paquefile",
         type=str,
         help="File to run",
         nargs="?",
@@ -103,7 +103,7 @@ def main(**args):
     )
     args = parser.parse_args()
     try:
-        pake(args)
+        paque(args)
     except Exception as exc:
         logger.error(exc)
 

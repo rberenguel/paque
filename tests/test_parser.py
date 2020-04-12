@@ -1,5 +1,5 @@
-from pake.parser import YAMLParser
-from pake.task import Task
+from paque.parser import YAMLParser
+from paque.task import Task
 
 
 def test_builds_a_task():

@@ -1,9 +1,25 @@
-# Pake `¯\_(ツ)_/¯`
+# Paque `¯\_(ツ)_/¯`
 
-Pake simplifies running simple workflows you want to run. It offers a few
-features of `make`, but removing most of its power. It runs on a `pakefile` or
-`pakefile.yaml` (or just pass the name of the file). You can see a simple
-[example in the root folder](pakefile.yaml).
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+
+- [Paque `¯\_(ツ)_/¯`](#paque-ツ)
+    - [Installation](#installation)
+        - [Tab completion](#tab-completion)
+    - [Why?](#why)
+    - [What?](#what)
+    - [How?](#how)
+    - [FAQ](#faq)
+        - [Why YAML and not FOOML?](#why-yaml-and-not-fooml)
+        - [Is this production ready?](#is-this-production-ready)
+        - [What's with the name?](#whats-with-the-name)
+    - [Future development](#future-development)
+
+<!-- markdown-toc end -->
+
+Paque simplifies running simple workflows you want to run. It offers a few
+features of `make`, but removing most of its power. It runs on a `paquefile` or
+`paquefile.yaml` (or just pass the name of the file). You can see a simple
+[example in the root folder](paquefile.yaml).
 
 It supports Python 3.6.5+ (for no particular reason aside from being my default,
 it should work just fine on any relatively recent Python 3)
@@ -13,13 +29,13 @@ it should work just fine on any relatively recent Python 3)
 It should be enough to run
 
 ```bash
-pip install pake
+pip install paque
 ```
 
 and then 
 
 ```bash
-pake taskname  # If you have a pakefile or pakefile.yaml file
+paque taskname  # If you have a paquefile or paquefile.yaml file
 ```
 
 ### Tab completion
@@ -78,16 +94,16 @@ For now you can't have spaces in arguments. Sorry.
 For usage, you would just 
 
 ```bash
-pake taskname
+paque taskname
 ```
 
 ## How?
 
 YAML (following the rules above) is converted into a dictionary of task names
-and [Tasks](pake/task.py) by a [Parser](pake/parser.py). Then a simple
-depth-first-search [planner](pake/planner.py) finds an execution that satisfies
+and [Tasks](paque/task.py) by a [Parser](paque/parser.py). Then a simple
+depth-first-search [planner](paque/planner.py) finds an execution that satisfies
 all dependencies and transitive dependencies (with arguments) of `taskname`.
-Finally, the plan is passed to an [executor](pake/executor.py) that offloads it
+Finally, the plan is passed to an [executor](paque/executor.py) that offloads it
 to the shell (or just logs it).
 
 ## FAQ
@@ -99,7 +115,7 @@ do. Since there is no nesting here, you can't shoot yourself in the foot with
 YAML. If you really can't stand YAML, you have two options
 
 - Use [dhall](https://github.com/dhall-lang/dhall-lang) and convert from dhall to YAML (_recommended_)
-- Write a [parser](pake/parser.py) for your favourite markup
+- Write a [parser](paque/parser.py) for your favourite markup
 
 ### Is this production ready?
 
@@ -110,8 +126,15 @@ though.
 
 ### What's with the name?
 
-For one, it's `python+make=pake`. On the other hand, it's also a form of "pa'
-qué", an Spanish slang for "para qué". I.e. _what for?_ `¯\_(ツ)_/¯`
+For one, it's `python+make=pake`, but it was taken (I should have checked
+before), so left it at `paque`. It's also a form of "pa' qué", an Spanish slang
+for "para qué". I.e. _what for?_ `¯\_(ツ)_/¯`
+
+### Contributing
+
+I'm happy to receive PRs, so don't be shy. Also let me know if you used it, that
+could be fun. As you see from the root folder, you will need to use
+[poetry](https://github.com/python-poetry/poetry)
 
 ## Future development
 
@@ -125,7 +148,7 @@ improving it, although the current version is "almost enough". Currently on the
   test and print". I want less tests of happy paths and more tests of corner
   cases
 - Custom exceptions, right now it's just "raise that"
-- Automatically convert pakefile.dhall into a YAML pakefile (this was supposed
+- Automatically convert paquefile.dhall into a YAML paquefile (this was supposed
   to be in this version but I got lazy)
 - Have a nicer CLI (probably using [cleo](https://github.com/sdispater/cleo))
 - Possibly, running tasks in parallel (this is a hard one given how the planner

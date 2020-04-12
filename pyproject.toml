@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "pake"
+name = "paque"
 version = "0.1.0"
-description = "Pake simplifies running simple workflows you want to run. It offers a few features of `make`, but removing most of its power"
+description = "paque simplifies running simple workflows you want to run. It offers a few features of `make`, but removing most of its power"
 authors = ["Ruben Berenguel <ruben+poetry@mostlymaths.net>"]
 license = "MIT"
 readme = "README.md"
 
-repository = "https://github.com/pake/pake"
+repository = "https://github.com/rberenguel/paque"
 
 [tool.poetry.dependencies]
 python = "^3.6"
@@ -24,7 +24,7 @@ mypy = "^0.770"
 monkeytype = "^19.11.2"
 
 [tool.poetry.scripts]
-pake = 'pake.pake:main'
+paque = 'paque.paque:main'
 
 [build-system]
 requires = ["poetry>=0.12"]

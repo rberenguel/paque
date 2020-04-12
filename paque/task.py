@@ -3,7 +3,7 @@ from typing import Dict, List, Optional, Union
 
 Section = Optional[Union[List[str], str, int]]
 
-logger = logging.getLogger("pake.Task")
+logger = logging.getLogger("paque.Task")
 
 
 class Task:

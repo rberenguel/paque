@@ -1,5 +1,5 @@
 import pytest
-from pake.task import Task
+from paque.task import Task
 
 
 def test_args_dict():

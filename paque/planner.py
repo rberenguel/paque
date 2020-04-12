@@ -1,9 +1,9 @@
 import logging
 from typing import Any, Dict, List, Optional, Tuple, Union
 
-from pake.task import Task
+from paque.task import Task
 
-logger = logging.getLogger("pake.planner")
+logger = logging.getLogger("paque.planner")
 
 
 class Planner:

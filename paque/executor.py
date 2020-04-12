@@ -3,7 +3,7 @@ import subprocess
 import time
 from typing import Any, List
 
-logger = logging.getLogger("pake.executor")
+logger = logging.getLogger("paque.executor")
 
 
 class Executor:

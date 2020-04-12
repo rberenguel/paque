@@ -4,9 +4,9 @@ from typing import Any, Dict, List, Optional
 
 import yaml
 
-from pake.task import Section, Task
+from paque.task import Section, Task
 
-logger = logging.getLogger("pake.Task")
+logger = logging.getLogger("paque.Task")
 
 
 class Parser(ABC):

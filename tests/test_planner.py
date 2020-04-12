@@ -1,7 +1,7 @@
-from pake import __version__
-from pake.planner import Planner
-from pake.task import Task
-from pake.parser import YAMLParser
+from paque import __version__
+from paque.planner import Planner
+from paque.task import Task
+from paque.parser import YAMLParser
 import logging
 
 logging.basicConfig(level=logging.DEBUG)
