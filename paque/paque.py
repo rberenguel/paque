@@ -1,7 +1,7 @@
-import argparse
 import logging
 import os
 
+import click
 from colorlog import ColoredFormatter  # type: ignore
 
 from paque.executor import Executor
@@ -31,9 +31,7 @@ def configure_logger():
     logger.addHandler(handler)
 
 
-def get_paquefile(args):
-    paquefile = args.paquefile
-
+def get_paquefile(paquefile):
     def check_file(candidate: str):
         try:
             candidate_path = os.path.join(os.getcwd(), candidate)
@@ -46,6 +44,7 @@ def get_paquefile(args):
         logger.debug("File not found: %s (no exception?)", candidate_path)
         return False
 
+    print(paquefile)
     if paquefile is None:
 
         candidates = ["paquefile", "paquefile.yaml"]
@@ -62,51 +61,38 @@ def get_paquefile(args):
         return paquefile
 
 
-def paque(args):
-    if args.debug:
+@click.command()
+@click.argument("task", required=True)
+@click.argument("path", default="paquefile.yaml", required=False)
+@click.option(
+    "--dry-run", default=False, is_flag=True, help="Dry run, logging the plan",
+)
+@click.option("--debug", help="Set log level to debug", is_flag=True)
+def paque(task, path, dry_run, debug):
+    """Paque simplifies running simple workflows you want to run. It offers a few
+features of `make`, but removing most of its power. It runs on a `paquefile` or
+`paquefile.yaml` (or just pass the name of the file)
+
+    """
+    configure_logger()
+    if debug:
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)
-    paquefile = get_paquefile(args)
+    paquefile = get_paquefile(path)
     parser = YAMLParser(paquefile)
     planner = Planner(parser.parse())
-    if args.dry_run:
-        Executor(planner.plan(args.task[0])).dry_run()
+    if dry_run:
+        try:
+            Executor(planner.plan(task)).dry_run()
+        except Exception as exc:
+            logger.exception(exc)
     else:
-        Executor(planner.plan(args.task[0])).run()
-
-
-def main(**args):
-    configure_logger()
-    parser = argparse.ArgumentParser(description="Paque: Not make, but in Python")
-    parser.add_argument(
-        "paquefile",
-        metavar="paquefile",
-        type=str,
-        help="File to run",
-        nargs="?",
-        default=None,
-    )
-    parser.add_argument(
-        "task",
-        metavar="task",
-        type=str,
-        help="Task to run from file",
-        nargs=1,
-        default=None,
-    )
-    parser.add_argument(
-        "--dry-run", dest="dry_run", action="store_true", help="Dry run the plan"
-    )
-    parser.add_argument(
-        "--debug", dest="debug", action="store_true", help="Set logging to debug level"
-    )
-    args = parser.parse_args()
-    try:
-        paque(args)
-    except Exception as exc:
-        logger.error(exc)
+        try:
+            Executor(planner.plan(task)).run()
+        except Exception as exc:
+            logger.exception(exc)
 
 
 if __name__ == "__main__":
-    main()
+    paque()

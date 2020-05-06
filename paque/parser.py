@@ -21,6 +21,10 @@ dictionary of Dict[str, Task], with keys being the names of the tasks"""
         pass
 
     @abstractmethod
+    def _get_condition(self, task_def) -> Optional[str]:
+        pass
+
+    @abstractmethod
     def _get_message(self, task_def) -> Optional[str]:
         pass
 
@@ -64,6 +68,19 @@ class YAMLParser(Parser):
         if isinstance(_run, str):
             return _run
         raise Exception("Run section should only contain a string or list of strings")
+
+    def _get_condition(self, task_def) -> Optional[str]:
+        _condition = self._find_section(task_def, "condition")
+        if _condition is None:
+            return None
+        if isinstance(_condition, List):
+            if all([isinstance(condition_item, str) for condition_item in _condition]):
+                return "\n".join(_condition)
+        if isinstance(_condition, str):
+            return _condition
+        raise Exception(
+            "Condition section should only contain a string or list of strings"
+        )
 
     def _get_sleep(self, task_def) -> Optional[str]:
         """Sleep if cast to an integer _after_ all variables have been evaluated. So,
@@ -110,7 +127,8 @@ this can only fail when running (or dry-running )the plan"""
             sleep: Optional[str] = self._get_sleep(task_def)
             message: Optional[str] = self._get_message(task_def)
             depends: Optional[List[Task]] = self._get_depends(task_def)
-            task = Task(task_name, run, depends, message, sleep)
+            condition: Optional[str] = self._get_condition(task_def)
+            task = Task(task_name, run, depends, message, sleep, condition)
             task_dict[task_name] = task
         return task_dict
 

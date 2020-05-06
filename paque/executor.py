@@ -27,9 +27,24 @@ class Executor:
             if message is not None:
                 logger.info(message)
             run = task.run
+            condition = task.condition
             if run is not None:
-                logger.debug("Running %s", run)
-                subprocess.run(run, shell=True, check=True)
+                condition_passes = True
+                if condition is not None:
+                    try:
+                        subprocess.run(
+                            condition, shell=True, check=True, capture_output=True
+                        )
+                    except Exception as exc:
+                        logger.warning("Condition (false) triggered: %s", exc)
+                        condition_passes = False
+                if condition_passes:
+                    logger.debug("Running %s", run)
+                    subprocess.run(run, shell=True, check=True)
+                else:
+                    logger.debug(
+                        "Not running %s due to condition %s not passing", run, condition
+                    )
             duration = task.get_sleep()
             if duration is not None:
                 logger.debug("Sleeping for %s", duration)

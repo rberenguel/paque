@@ -79,19 +79,22 @@ otherwise:
       - "Yes."
 ```
 
-You can also use arguments and multiple arguments,
+You can also use arguments, multiple arguments, and conditions
 
 ```yaml
 taskname:
   - run: "{something} {folder}"
   - message: "This does {something} on {folder}"
+  - condition: "do-if-bash-says-this-is-0"
 
 main:
   - depends:
       - taskname folder:/Users/foo/ something:rmdir
 ```
 
-For now you can't have spaces in arguments. Sorry.
+For now you can't have spaces in arguments. Sorry. Also, there is no way at the
+moment to pass arguments from the command line to tasks, this will be coming
+soon.
 
 For usage, you would just 
 
@@ -153,8 +156,14 @@ improving it, although the current version is "almost enough". Currently on the
 - Custom exceptions, right now it's just "raise that"
 - Automatically convert paquefile.dhall into a YAML paquefile (this was supposed
   to be in this version but I got lazy)
-- Have a nicer CLI (probably using [cleo](https://github.com/sdispater/cleo))
+- ~Have a nicer CLI (probably using [cleo](https://github.com/sdispater/cleo))~
+  Moved to using [click](https://click.palletsprojects.com/en/7.x/), after the
+  great experience with [motllo](https://github.com/rberenguel/motllo)
 - Possibly, running tasks in parallel (this is a hard one given how the planner
   works, so probably won't)
-- Conditionals?
-- Fixing the bug that is likely there in argument substitution
+- ~Conditionals?~ Available as optional tasks. The condition is _on what is
+  run_, assumes that the task _has run_ if condition is _false_. So, **a false
+  condition does not stop execution of the rest of the plan**
+- Fixing the bug that is likely there in argument substitution (_note_: I have
+  been using `paque` quite regularly in other projects and I have still not hit
+  it)

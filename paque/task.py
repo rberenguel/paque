@@ -18,18 +18,20 @@ implementations. Obviously"""
         depends: Optional[List["Task"]] = None,
         message: Optional[str] = None,
         sleep: Optional[str] = None,
+        condition: Optional[str] = None,
     ):
         self.name = name
         self.run = run
         self.depends = depends
         self.message = message
         self.sleep = sleep
+        self.condition = condition
 
     def __repr__(self) -> str:
         """Why did you use emoji? Why not?"""
-        depends_then_runs = f"[{self.depends}] -> {self.run}"
+        depends_if_then_runs = f"[{self.depends}] ({self.condition}?)-> {self.run}"
         says_sleeps = f"(🗣 {self.message},😴 {self.sleep})"
-        return f"Task({self.name}: {depends_then_runs} {says_sleeps}"
+        return f"Task({self.name}: {depends_if_then_runs} {says_sleeps}"
 
     def __lt__(self, other):
         if not isinstance(other, Task):
@@ -98,6 +100,8 @@ substitution"""
             self.message = interpolate(self.message)
         if self.sleep is not None:
             self.sleep = interpolate(self.sleep)
+        if self.condition is not None:
+            self.condition = interpolate(self.condition)
         if self.depends is not None:  # Depends can be an empty list instead of None!
             self.depends = [
                 dependency.with_args(args)

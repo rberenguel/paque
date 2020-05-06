@@ -1,4 +1,5 @@
 import logging
+import sys
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 from paque.task import Task
@@ -35,7 +36,11 @@ class Planner:
 
     def _with_args(self, task_name: str, args: Optional[List[str]]) -> Task:
         logger.debug("Task to replace: %s", task_name)
-        extracted = self._tasks[task_name]
+        try:
+            extracted = self._tasks[task_name]
+        except KeyError as exc:
+            logger.error("Task %s not found in file", task_name)
+            sys.exit(-1)
         if args is not None:
             extracted.with_args(args)
         return extracted
